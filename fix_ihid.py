@@ -10,11 +10,11 @@ try:
   after = sys.argv[2]
   directory = sys.argv[3]
 except IndexError:
-  print('USAGE: python3 fix_ihid.py <before> <after> <directory>')
+  print('USAGE: python3 fix_ihid.py <before> <after> <directory>', file=sys.stderr)
   sys.exit(1)
 
 
-# Converts names but doesn't handle `::`
+# Mostly converts PascalCase to snake_case but doesn't handle `::`
 # Taken from https://stackoverflow.com/a/1176023/3131790
 name_pattern = re.compile(r'(?<!^)(?=[A-Z])')
 
@@ -43,7 +43,7 @@ for path, dirs, files in os.walk(directory):
     with open(fullpath) as f:
       sub_result = re.sub(rf'{before}|{pascal_to_snake(before)}', substitution, f.read(), 0, re.MULTILINE)
       if not sub_result:
-        print(f'Failed to convert file at path {fullpath}')
+        print(f'Failed to convert file at path {fullpath}', file=sys.stderr)
         continue
 
     with open(fullpath, 'w') as f:
