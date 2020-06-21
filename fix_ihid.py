@@ -26,25 +26,25 @@ def pascal_to_snake(s: str) -> str:
   # We end up with some '/_' so we remove the underscore.
   return converted.replace('/_', '/')
 
+
 substitution = pascal_to_snake(after)
 
+# Tests I used.
+# assert pascal_to_snake('Rookie') == 'rookie'
+# assert pascal_to_snake('FirstSubmission') == 'first_submission'
+# assert pascal_to_snake('XyZ') == 'xy_z'
+# assert pascal_to_snake('Ab::Cd') == 'ab/cd'
 
-if __name__ == '__main__':
-  # assert pascal_to_snake('Rookie') == 'rookie'
-  # assert pascal_to_snake('FirstSubmission') == 'first_submission'
-  # assert pascal_to_snake('XyZ') == 'xy_z'
-  # assert pascal_to_snake('Ab::Cd') == 'ab/cd'
+# Help from https://stackoverflow.com/a/2578059/3131790
+for path, dirs, files in os.walk(directory):
+  for filename in files:
+    fullpath = os.path.join(path, filename)
 
-  # Help from https://stackoverflow.com/a/2578059/3131790
-  for path, dirs, files in os.walk(directory):
-    for filename in files:
-      fullpath = os.path.join(path, filename)
+    with open(fullpath) as f:
+      sub_result = re.sub(rf'{before}|{pascal_to_snake(before)}', substitution, f.read(), 0, re.MULTILINE)
+      if not sub_result:
+        print(f'Failed to convert file at path {fullpath}')
+        continue
 
-      with open(fullpath) as f:
-        sub_result = re.sub(rf'{before}|{pascal_to_snake(before)}', substitution, f.read(), 0, re.MULTILINE)
-        if not sub_result:
-          print(f'Failed to convert file at path {fullpath}')
-          continue
-
-      with open(fullpath, 'w') as f:
-        f.write(sub_result)
+    with open(fullpath, 'w') as f:
+      f.write(sub_result)
