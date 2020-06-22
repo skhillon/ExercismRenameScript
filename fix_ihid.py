@@ -77,6 +77,10 @@ def capitalize_after_colons(s: str, substitution: str) -> str:
 #   'rookie'
 # ) == ':rookieBadge'
 
+# assert capitalize_after_colons(
+#   "factory :badge, class: 'Badges::rookieBadge' do Things::rookieThing again Again::rookiePerson",
+#   'rookie'
+# ) == "factory :badge, class: 'Badges::RookieBadge' do Things::RookieThing again Again::RookiePerson"
 
 # Main functionality
 substitution = pascal_to_snake(after)
